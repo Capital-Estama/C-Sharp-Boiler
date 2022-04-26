@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+//added 
+using C_Sharp_Boiler.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace C_Sharp_Boiler
 {
@@ -23,6 +26,9 @@ namespace C_Sharp_Boiler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            // added
+            services.AddDbContext<MyContext>(options => options.UseMySql (Configuration["DBInfo:ConnectionString"]));
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +45,7 @@ namespace C_Sharp_Boiler
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 
